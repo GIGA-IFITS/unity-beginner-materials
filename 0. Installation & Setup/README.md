@@ -49,4 +49,8 @@ A step-by-step installation & setup guide for Unity version 6.<br>
 - ✨ Congrats, your new project is ready 🎉
 ![Unity Editor](resources/unityEditor.jpg)
 ## i. Additional References
+- IDE/code editor documentations for Unity
+  - [Microsoft Visual Studio](https://learn.microsoft.com/en-us/visualstudio/gamedev/unity/get-started/visual-studio-tools-for-unity)
+  - [Visual Studio Code](https://code.visualstudio.com/docs/other/unity)
+  - [JetBrains Rider](https://www.jetbrains.com/help/rider/Unity.html)
 - [Unity Hub Official Documentation](https://docs.unity.com/en-us/hub)
