@@ -3,7 +3,7 @@
 A beginner course about Unity version 6+, containing introductions to the game engine and its fundamental abilities with some advanced materials about polishing.
 
 ## Content Outline
-### 0. [Download & Setup]()
+### 0. [Unity Installation & Setup](/0.%20Installation%20&%20Setup)
 ### 1. [Introduction to Unity 6]()
 ### 2. [Unity Features]()
 ### 3. [Basic Scripting]()
