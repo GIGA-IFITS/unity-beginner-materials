@@ -92,11 +92,102 @@ Common types:
 | `bool` | `true`, `false` | On/off states |
 | `string` | `"Player"` | Text |
 
-What are **`public`** and **`private`** in function and variable definitions?
-- `public` means that it is visible to other scripts and shown in the Inspector. If it needs to be seen or used by something other than itself, it should be public.
-- `private` means that it is hidden from other scripts and not shown in the Inspector.
+### Access Modifiers: `public`, `private`, and `protected`
 
-**`[SerializeField]`** keeps a variable `private` but still shows it in the Inspector. Preferred over `public` when you only need Inspector access.
+`public`, `private`, and `protected` are called **access modifiers**. They determine which parts of the program are allowed to access a variable or method.
+
+| Access modifier | Same class | Child class | Other scripts |
+|---|---:|---:|---:|
+| `private` | Yes | No | No |
+| `protected` | Yes | Yes | No |
+| `public` | Yes | Yes | Yes |
+
+#### `public`
+
+A `public` variable or method can be accessed by other scripts.
+
+```csharp
+public class Player : MonoBehaviour
+{
+    public int score = 0;
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+    }
+}
+```
+
+Another script can access it through a reference to the `Player` component:
+
+```csharp
+player.AddScore(10);
+Debug.Log(player.score);
+```
+
+In Unity, a supported serialized `public` field is also shown in the Inspector. However, a field should not be made `public` only because you want to edit it in the Inspector. Making it `public` also allows other scripts to change it directly.
+
+Use `public` for members that are intentionally part of the class's external interface, such as methods that other scripts are expected to call.
+
+#### `private`
+
+A `private` variable or method can only be accessed from inside the class where it is declared.
+
+```csharp
+public class Player : MonoBehaviour
+{
+    private int health = 100;
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
+}
+```
+
+Another script cannot directly write `player.health`. It must use the `TakeDamage()` method instead. This lets the class control how its internal data is changed.
+
+Use `private` for internal data and helper methods that other scripts do not need to access. As a general rule, start with `private` and only increase the access level when necessary.
+
+#### `protected`
+
+A `protected` variable or method can be accessed inside its own class and inside classes that inherit from it, but not by unrelated scripts.
+
+```csharp
+public class Character : MonoBehaviour
+{
+    protected int health = 100;
+}
+
+public class Enemy : Character
+{
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
+}
+```
+
+Here, `Enemy` can access `health` because it inherits from `Character`. A separate script cannot access it directly.
+
+Use `protected` when a member should remain hidden from unrelated scripts but still be available to child classes.
+
+#### `[SerializeField] private`
+
+By default, a `private` field is not shown in the Inspector. Adding **`[SerializeField]`** keeps the field private to other scripts while allowing its value to be edited in the Inspector.
+
+```csharp
+[SerializeField] private float jumpForce = 10f;
+```
+
+This is usually preferred over `public` when the value only needs to be configured through the Inspector.
+
+A useful rule is:
+
+1. Use `private` for internal data.
+2. Use `[SerializeField] private` when the Inspector needs to edit that data.
+3. Use `protected` when child classes need access.
+4. Use `public` when other scripts are intentionally allowed to use it.
 
 ![Inspector showing public and SerializeField variables on a GameObject](resources/Inspector%20-%20MyScript%20Public%20%26%20Serialize.png)
 
