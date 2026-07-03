@@ -47,7 +47,7 @@ The **Sprite Renderer** component displays a sprite on a GameObject. Key setting
 | **Sprite** | The image to display |
 | **Color** | Tints the sprite |
 | **Sorting Layer** | Controls which layer this sprite renders on |
-| **Order in Layer** | Controls draw order within the same sorting layer — higher values render on top |
+| **Order in Layer** | Controls draw order within the same sorting layer. Higher values render on top |
 
 ![Sprite Renderer Component](resources/Sprite%20Renderer.png)
 
@@ -78,7 +78,7 @@ A **Collider 2D** defines the physical boundary of a GameObject for collision de
 ![Box Collider 2D Component](resources/BoxCollider%202D.png)
 
 ## 5. Camera
-The **Camera** component renders what it sees to the screen. In a 2D project it uses **Orthographic** projection — no perspective distortion.
+The **Camera** component renders what it sees to the screen. In a 2D project it uses **Orthographic** projection, with no perspective distortion.
 
 Key settings in the Inspector:
 
@@ -93,8 +93,8 @@ Key settings in the Inspector:
 ## 6. Layers & Tags
 **Layers** and **Tags** are ways to label and organize GameObjects. They're especially useful once you start scripting.
 
-- **Tag** — a single label on a GameObject (e.g. `Player`, `Enemy`, `Ground`)
-- **Layer** — a group that GameObjects belong to, used to control physics collisions and camera rendering
+- **Tag**: a single label on a GameObject (e.g. `Player`, `Enemy`, `Ground`)
+- **Layer**: a group that GameObjects belong to, used to control physics collisions and camera rendering
 
 To assign them: select a GameObject and use the **Tag** and **Layer** dropdowns at the top of the Inspector.
 
@@ -114,7 +114,7 @@ The **Input System** is Unity's package for reading player input (keyboard, mous
 > ⚠ Installing the Input System will prompt you to restart the editor. Save your work first. ⚠
 
 ## i. Additional References
-- [Unity 6 Manual — Scenes](https://docs.unity3d.com/6000.0/Documentation/Manual/CreatingScenes.html)
-- [Unity 6 Manual — Prefabs](https://docs.unity3d.com/6000.0/Documentation/Manual/Prefabs.html)
-- [Unity 6 Manual — 2D Physics](https://docs.unity3d.com/6000.0/Documentation/Manual/Physics2DReference.html)
-- [Unity 6 Manual — Input System](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/index.html)
+- [Unity 6 Manual: Scenes](https://docs.unity3d.com/6000.0/Documentation/Manual/CreatingScenes.html)
+- [Unity 6 Manual: Prefabs](https://docs.unity3d.com/6000.0/Documentation/Manual/Prefabs.html)
+- [Unity 6 Manual: 2D Physics](https://docs.unity3d.com/6000.0/Documentation/Manual/Physics2DReference.html)
+- [Unity 6 Manual: Input System](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/index.html)

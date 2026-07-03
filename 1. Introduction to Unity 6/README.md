@@ -83,4 +83,4 @@ Play Mode lets you test your game directly in the editor.
 
 ## i. Additional References
 - [Unity 6 Manual](https://docs.unity3d.com/6000.0/Documentation/Manual/)
-- [Unity Learn — Unity Essentials](https://learn.unity.com/pathway/unity-essentials)
+- [Unity Learn: Unity Essentials](https://learn.unity.com/pathway/unity-essentials)
