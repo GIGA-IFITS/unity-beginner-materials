@@ -24,18 +24,6 @@ By the end of this exercise, you should be able to:
 4. Place the spheres side by side above the floor.
 5. Keep or add one Directional Light.
 
-A simple hierarchy is enough:
-
-```text
-GraphicsPractice
-|-- Main Camera
-|-- Directional Light
-|-- Floor
-|-- LitSphere
-|-- UnlitSphere
-`-- GlassSphere
-```
-
 ## 2. Create the Materials
 
 Create a folder named `Materials`, then create these three materials inside it:
