@@ -94,6 +94,9 @@ Good graphics are not only visually appealing; they also fit the target hardware
 - Keep transparent layers and overdraw under control.
 - Use the **Game View Stats**, **Frame Debugger**, and **Profiler** to measure before optimizing.
 
+## Practice
+Complete the [Material Comparison Exercise](PRACTICE.md) to apply the chapter concepts in a small URP scene.
+
 ## i. Additional References
 - [Unity 6 Manual: Graphics](https://docs.unity3d.com/6000.0/Documentation/Manual/Graphics.html)
 - [Unity 6 Manual: Materials](https://docs.unity3d.com/6000.0/Documentation/Manual/Materials.html)
