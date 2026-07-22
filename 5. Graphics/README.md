@@ -8,6 +8,8 @@ Every rendered frame follows the same high-level flow:
 Scene objects -> Camera visibility -> Materials and lighting -> Screen image
 ```
 
+![Simplified rendering pipeline from scene objects to the final screen image](resources/rendering-pipeline.svg)
+
 - **Mesh or Sprite** defines the visible shape.
 - **Material** controls how the surface looks.
 - **Shader** contains the rules used to calculate the surface color.
@@ -36,6 +38,8 @@ In a typical Universal Render Pipeline (URP) project:
 - Use **Universal Render Pipeline/Unlit** for a flat appearance that ignores lights.
 - Create a material through **Assets -> Create -> Material**.
 - Assign it by dragging the material onto a renderer or into the renderer's Materials list.
+
+![Comparison of Lit, Unlit, and Transparent materials](resources/material-comparison.png)
 
 > Reusing one material across multiple objects reduces duplicated assets and keeps their appearance consistent.
 

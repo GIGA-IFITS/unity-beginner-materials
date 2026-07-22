@@ -2,6 +2,10 @@
 
 Build a small scene that makes the difference between lit, unlit, opaque, and transparent materials easy to observe.
 
+Use this comparison as a visual target. Your result does not need to match its colors or camera angle exactly.
+
+![Visual target showing Lit, Unlit, and Transparent spheres](resources/material-comparison.png)
+
 ## Learning Goals
 
 By the end of this exercise, you should be able to:
