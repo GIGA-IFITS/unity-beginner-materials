@@ -325,7 +325,8 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 **Langkah kamu:**
 1. Klik kanan di Hierarchy → `UI > Canvas` (ini otomatis membuat `EventSystem` juga).
 2. Pada Canvas, atur **Canvas Scaler** → `UI Scale Mode = Scale With Screen Size`, `Reference Resolution` sesuaikan dengan target kamu (misal 1920x1080).
-![alt text](11.png)
+
+    ![alt text](11.png)
 3. Klik kanan pada Canvas → `UI > Text - TextMeshPro`, beri nama `ScoreText`, posisikan di pojok atas.
 4. Jika muncul prompt, import TMP Essentials: `Window > TextMeshPro > Import TMP Essential Resources`.
 5. Buat script `Scripts/ScoreManager.cs`:
@@ -520,7 +521,8 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 4. Drag script ini ke `GameManagerObject`, isi field `Game Over Panel` dan `Final Score Text`.
 ![alt text](29.png)
 5. Pilih tombol `RestartButton` → di Inspector bagian `On Click ()` → klik `+` → drag `GameManagerObject` → pilih fungsi `GameManager > RestartGame()`.
-![alt text](18.png)
+
+    ![alt text](18.png)
 6. Pastikan Scene sudah tersimpan (`Ctrl+S`) dengan nama, misal `Gameplay`, lalu masuk ke `File > Build Profiles` pada tab `Scene List`, klik `Add Open Scenes` agar scene dikenali sistem.
 ![alt text](19.png)
 7. Modifikasi `FallingObject.cs` agar memanggil `GameManager.Instance.GameOver()` saat meteor menyentuh player (sudah ada di script sebelumnya).
