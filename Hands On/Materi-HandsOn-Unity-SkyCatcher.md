@@ -109,9 +109,6 @@ Ikuti kecepatan pemateri di kelas, waktu di atas hanya panduan, tidak perlu buru
 2. Import asset yang sudah diberikan pemateri (drag & drop sprite dan audio ke folder masing-masing).
 3. Cek **Sprite Import Settings**: klik sprite → di Inspector pastikan `Texture Type = Sprite (2D and UI)` → klik **Apply**.
 ![alt text](3.png)
-4. Atur **Main Camera**: set `Projection = Orthographic`, atur `Size` (misal 5) supaya area permainan terlihat pas di Game view.
-![alt text](4.png)
-5. (Opsional) Tambahkan background langit sebagai sprite di belakang (atur Sorting Layer paling belakang).
 
 **✅ Cek diri sendiri:** Folder sudah rapi, sprite sudah ter-import dengan benar, dan Game view menampilkan area permainan dengan proporsi yang pas.
 
@@ -131,11 +128,13 @@ Ikuti kecepatan pemateri di kelas, waktu di atas hanya panduan, tidak perlu buru
 3. Beri nama `Player`, set **Tag** = `Player` (buat tag baru lewat Inspector → Tag → Add Tag).
 ![alt text](5.png)
 4. `Add Component` → **Rigidbody2D** → set `Body Type = Kinematic`.
+5. Pada `RigidBody2D`, ubah `Interpolate` dari `None` menjadi `Interpolate` untuk mengurangi efek jitter saat bergerak.
 5. `Add Component` → **Box Collider 2D** (atau Circle Collider 2D) → centang **Is Trigger**.
 6. Buat script baru `Scripts/PlayerController.cs`:
 
     ```csharp
     using UnityEngine;
+    using UnityEngine.InputSystem;
 
     public class PlayerController : MonoBehaviour
     {
@@ -143,44 +142,45 @@ Ikuti kecepatan pemateri di kelas, waktu di atas hanya panduan, tidak perlu buru
 
         private Rigidbody2D rb;
         private float halfWidth;
+        private float moveInput;
 
         void Start()
         {
             rb = GetComponent<Rigidbody2D>();
-
             halfWidth = Camera.main.orthographicSize * Camera.main.aspect;
         }
 
         void Update()
         {
-            float moveInput = Input.GetAxisRaw("Horizontal");
+            moveInput = 0f;
 
-            // Kecepatan horizontal selalu konstan
-            rb.linearVelocity = new Vector2(
-                moveInput * speed,
-                0f
-            );
+            if (Keyboard.current != null)
+            {
+                if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
+                    moveInput = -1f;
 
-            // Batasi posisi player agar tidak keluar layar
+                if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
+                    moveInput = 1f;
+            }
+        }
+
+        void FixedUpdate()
+        {
+            Vector2 newPosition = rb.position + Vector2.right * moveInput * speed * Time.fixedDeltaTime;
+
             float clampedX = Mathf.Clamp(
-                transform.position.x,
+                newPosition.x,
                 -halfWidth,
                 halfWidth
             );
 
-            transform.position = new Vector3(
-                clampedX,
-                transform.position.y,
-                transform.position.z
-            );
+            rb.MovePosition(new Vector2(clampedX, rb.position.y));
         }
     }
     ```
-6. Jika kalian mendapat error input system baru, buka `Edit > Project Settings > Player > Other Settings > Active Input Handling` → pilih **Both** → restart Unity.
-![alt text](27.png)
-7. Drag script ke GameObject `Player`.
-8. Tekan **Play**, coba gerakkan dengan tombol A/D atau panah kiri/kanan. Pesawat harus berhenti di tepi layar (tidak keluar).
-     ![alt text](6.png)
+6. Drag script ke GameObject `Player`.
+7. Tekan **Play**, coba gerakkan dengan tombol A/D atau panah kiri/kanan. Pesawat harus berhenti di tepi layar (tidak keluar).
+![alt text](35.png)
 
 **✅ Cek diri sendiri:** Pesawat bisa bergerak kiri-kanan dan tidak keluar dari batas layar saat Play.
 
@@ -222,13 +222,25 @@ Ikuti kecepatan pemateri di kelas, waktu di atas hanya panduan, tidak perlu buru
 
             if (type == ObjectType.Star)
             {
-                ScoreManager.Instance.AddScore(scoreValue);
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.catchClip);
+                if (ScoreManager.Instance != null)
+                {
+                    ScoreManager.Instance.AddScore(scoreValue);
+                }
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.catchClip);
+                }
             }
             else
             {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.explosionClip);
-                GameManager.Instance.GameOver();
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.explosionClip);
+                }
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.GameOver();
+                }
             }
             
             Destroy(gameObject);
@@ -236,7 +248,7 @@ Ikuti kecepatan pemateri di kelas, waktu di atas hanya panduan, tidak perlu buru
     }
     ```
 
-    > ⚠️ **Wajar jika muncul error di Console** setelah menulis script ini. Script memanggil `ScoreManager`, `AudioManager`, `GameManager` yang **belum kamu buat**. Error ini akan hilang otomatis setelah kamu menyelesaikan Sesi 6-8. Ini bagian normal dari proses belajar membaca error message. Untuk sekarang, kamu bisa hapus baris 25-34 yang menyebabkan error tersebut, kita akan menambahkan kembali nanti setelah sesi terkait selesai.
+    > ⚠️ **Wajar jika muncul error di Console** setelah menulis script ini. Script memanggil `ScoreManager`, `AudioManager`, `GameManager` yang **belum kamu buat**. Error ini akan hilang otomatis setelah kamu menyelesaikan Sesi 6-8. Ini bagian normal dari proses belajar membaca error message. Untuk sekarang, kamu bisa hapus atau komen baris 25-46 yang menyebabkan error tersebut, kita akan menambahkan kembali nanti setelah sesi terkait selesai.
 
 5. Attach script ke `Star` (set `type = Star`) dan ke `Meteor` (set `type = Meteor`).
 6. Drag kedua GameObject ke folder `Prefabs` untuk menjadikannya **Prefab**, lalu hapus instance-nya dari Scene.
@@ -280,8 +292,7 @@ Ikuti kecepatan pemateri di kelas, waktu di atas hanya panduan, tidak perlu buru
     ```
 
 3. Drag script ke `Spawner`, isi field `Star Prefab` dan `Meteor Prefab` di Inspector dengan prefab dari folder `Prefabs`.
-
-    ![alt text](9.png)
+![alt text](9.png)
 
 **✅ Cek diri sendiri:** Saat Play, bintang dan meteor berjatuhan otomatis dari atas secara acak.
 
@@ -368,7 +379,10 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 
             if (type == ObjectType.Star)
             {
-                ScoreManager.Instance.AddScore(scoreValue);
+                if (ScoreManager.Instance != null)
+                {
+                    ScoreManager.Instance.AddScore(scoreValue);
+                }
             }
 
             Destroy(gameObject);
@@ -387,8 +401,9 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 
 
 **Langkah kamu:**
-1. Buat GameObject kosong `AudioManagerObject`, tambahkan sebuah **AudioSource**:
+1. Buat GameObject kosong `AudioSourceObject`, tambahkan sebuah **AudioSource**:
    - `SFX Source` (untuk suara tangkap & ledakan)
+
     ![alt text](13.png)
 
 2. Buat script `Scripts/AudioManager.cs`:
@@ -415,28 +430,37 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
     }
     ```
 
-3. Drag script ke `AudioManagerObject`, isi `Sfx Source` dengan AudioSource, isi `Catch Clip` dan `Explosion Clip` dengan file audio yang sudah kamu import.
-![alt text](14.png)
+3. Drag script `AudioManager` ke `GameManagerObject`, isi `Sfx Source` dengan AudioSource pada `AudioSourceObject`, isi `Catch Clip` dan `Explosion Clip` dengan file audio yang sudah kamu import.
+
+    ![alt text](28.png)
 4. Modifikasi `FallingObject.cs` agar memanggil `AudioManager.Instance.PlaySFX()` saat bintang tertangkap atau meteor meledak (sudah ada di script sebelumnya).
     ```csharp
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.CompareTag("Player")) return;
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
 
-            if (type == ObjectType.Star)
+        if (type == ObjectType.Star)
+        {
+            if (ScoreManager.Instance != null)
             {
                 ScoreManager.Instance.AddScore(scoreValue);
+            }
+            if (AudioManager.Instance != null)
+            {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.catchClip);
             }
-            else
+        }
+        else
+        {
+            if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.explosionClip);
             }
-            
-            Destroy(gameObject);
         }
+        
+        Destroy(gameObject);
+    }
     ```
-
 
 **✅ Cek diri sendiri:** Suara "tangkap" terdengar tiap kali bintang tertangkap.
 
@@ -449,11 +473,13 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 1. Di Canvas, klik kanan → `UI > Panel`, beri nama `GameOverPanel`. Non-aktifkan (uncheck) GameObject ini di Inspector supaya tersembunyi di awal.
 2. Di dalam panel, tambahkan:
    - `TextMeshPro - Text` bertuliskan "Game Over", beri nama `GameOverText`. Atur posisinya di x = 0, y = 200, z = 0. Atur width menjadi 400, height 100, font size 72, alignment center.
-   ![alt text](15.png)
+   
+        ![alt text](15.png)
    - `TextMeshPro - Text` untuk skor akhir, beri nama `FinalScoreText`. Atur posisinya di x = 0, y = -100, z = 0. Atur width menjadi 400, height 100, font size 48, alignment center.
 
    - `Button - TextMeshPro` bertuliskan "Restart", beri nama `RestartButton`. Atur posisinya di x = 0, y = -300, z = 0. Atur width menjadi 200, height 60.
-   ![alt text](16.png)
+   
+        ![alt text](16.png)
 3. Buat script `Scripts/GameManager.cs`:
     ```csharp
     using UnityEngine;
@@ -491,31 +517,43 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
     }
     ```
 
-4. Drag script ini ke `GameManagerObject` (boleh digabung di satu GameObject dengan `ScoreManager`), isi field `Game Over Panel` dan `Final Score Text`.
-![alt text](17.png)
+4. Drag script ini ke `GameManagerObject`, isi field `Game Over Panel` dan `Final Score Text`.
+![alt text](29.png)
 5. Pilih tombol `RestartButton` → di Inspector bagian `On Click ()` → klik `+` → drag `GameManagerObject` → pilih fungsi `GameManager > RestartGame()`.
 ![alt text](18.png)
-6. Pastikan Scene sudah tersimpan (`Ctrl+S`) dengan nama, misal `Gameplay`, lalu masuk ke `File > Build Profiles > Add Open Scenes` agar scene dikenali sistem.
+6. Pastikan Scene sudah tersimpan (`Ctrl+S`) dengan nama, misal `Gameplay`, lalu masuk ke `File > Build Profiles` pada tab `Scene List`, klik `Add Open Scenes` agar scene dikenali sistem.
 ![alt text](19.png)
 7. Modifikasi `FallingObject.cs` agar memanggil `GameManager.Instance.GameOver()` saat meteor menyentuh player (sudah ada di script sebelumnya).
     ```csharp
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.CompareTag("Player")) return;
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
 
-            if (type == ObjectType.Star)
+        if (type == ObjectType.Star)
+        {
+            if (ScoreManager.Instance != null)
             {
                 ScoreManager.Instance.AddScore(scoreValue);
+            }
+            if (AudioManager.Instance != null)
+            {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.catchClip);
             }
-            else
+        }
+        else
+        {
+            if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.explosionClip);
+            }
+            if (GameManager.Instance != null)
+            {
                 GameManager.Instance.GameOver();
             }
-            
-            Destroy(gameObject);
         }
+        
+        Destroy(gameObject);
+    }
     ```
 > ⚠️ **Konsep penting:** pemanggilan `ScoreManager.Instance`, `AudioManager.Instance` dan `GameManager.Instance` di script lain adalah contoh implementasi salah satu design pattern, yaitu **Singleton Pattern**. Ini memungkinkan script lain mengakses fungsi manager tanpa harus drag & drop referensi di Inspector.
 
@@ -523,7 +561,17 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 
 1. Buat Scene baru: `File > New Scene`, simpan dengan nama `MainMenu`.
 ![alt text](20.png)
-2. Tambahkan Canvas berisi judul game + tombol "Play".
+2. Membuat UI Main Menu:
+    - Di Hierarchy, klik kanan → `UI > Canvas`, rename menjadi `MainMenuCanvas`.
+   - Pada Canvas, buka **Canvas Scaler** dan pilih `UI Scale Mode = Scale With Screen Size`.
+   - Atur `Reference Resolution`, misalnya `1920 x 1080`.
+   - Klik kanan `MainMenuCanvas` → `UI > Image`, rename menjadi `Background`.
+   - Masukkan sprite background ke `Source Image`. Jika background menggunakan pola yang ingin diulang, ubah `Image Type` menjadi `Tiled`.
+   - Klik kanan `MainMenuCanvas` → `UI > Text - TextMeshPro`, rename menjadi `TitleText`, lalu isi dengan judul **Sky Catcher**.
+   - Atur ukuran, posisi, dan alignment judul agar berada di area atas/tengah layar.
+   - Klik kanan `MainMenuCanvas` → `UI > Button - TextMeshPro`, rename menjadi `PlayButton`.
+   - Buka child Text/TMP di dalam button dan ubah tulisannya menjadi **Play**.
+   - Posisikan tombol di tengah layar.
 3. Buat script `Scripts/MainMenuManager.cs`, attach ke GameObject kosong dan namai `MainMenuManager`:
 
     ```csharp
@@ -550,14 +598,27 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
         }
     ```
 
-6. Tambahkan tombol "Main Menu" di `GameOverPanel`, hubungkan ke `GameManager.GoToMainMenu()`.
-![alt text](31.png)
+6. Tambahkan tombol Main Menu pada Game Over Panel secara lengkap:
+   - Kembali ke Scene `Gameplay`.
+   - Di Hierarchy, buka `GameOverCanvas > GameOverPanel`.
+   - Klik kanan `GameOverPanel` → `UI > Button - TextMeshPro`.
+   - Rename menjadi `MainMenuButton`.
+   - Buka child Text/TMP di dalam button dan ubah tulisannya menjadi **Main Menu**.
+   - Atur posisi tombol di bawah tombol Restart, misalnya x = 0, y = -380, z = 0.
+   - Atur ukuran tombol sekitar width = 200 dan height = 60.
+   - Pilih `MainMenuButton`.
+   - Di Inspector, cari **Button > On Click ()**.
+   - Klik `+`.
+   - Drag GameObject `GameManager` dari Hierarchy ke slot object.
+   - Klik dropdown fungsi → pilih `GameManager > GoToMainMenu()`.
+   - Tekan Play, sengaja tangkap meteor, lalu saat Game Over klik **Main Menu**. Pastikan game kembali ke scene `MainMenu`.
+    ![alt text](31.png)
 7. Buka `File > Build Settings`, urutkan scene: **index 0 = MainMenu**, **index 1 = Gameplay** (drag untuk mengatur urutan).
 ![alt text](22.png)
 
 **✅ Cek diri sendiri (bonus):** Dari Main Menu bisa masuk ke Gameplay, dan dari Game Over bisa kembali ke Main Menu.
 
-![alt text](23.png)
+![alt text](30.png)
 ---
 
 ## Bagian 9: Testing Akhir & Recap 
@@ -573,9 +634,9 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 4. Singleton Pattern + GameManager untuk mengatur alur game
 5. SceneManager.LoadScene untuk restart & navigasi menu
 
-> ![alt text](24.png)
-> ![alt text](25.png)
-> ![alt text](26.png)
+> ![alt text](32.png)
+> ![alt text](34.png)
+> ![alt text](33.png)
 
 ---
 
