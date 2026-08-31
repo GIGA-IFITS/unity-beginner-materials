@@ -7,7 +7,7 @@ A beginner course about Unity version 6, containing introductions to the game en
 ### 1. [Introduction to Unity 6](/1.%20Introduction%20to%20Unity%206/)
 ### 2. [Unity Features](/2.%20Unity%20Features/)
 ### 3. [Basic Scripting](/3.%20Basic%20Scripting/)
-### 4. [Hands-On](/3.%20Hands%20On/)
+### 4. [Hands-On](/4.%20Hands%20On/)
 ### 5. [Graphics]()
 
 ---
