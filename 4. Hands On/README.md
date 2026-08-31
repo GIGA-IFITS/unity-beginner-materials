@@ -16,7 +16,7 @@ Pemain akan mengendalikan pesawat kecil yang bergerak kiri-kanan di bagian bawah
 - Ada tombol **Restart** (load ulang scene) dan **Main Menu**.
 
 
-![Sky Catcher Overview](resources/0.png)
+> ![Sky Catcher Overview](resources/0.png)
 
 ---
 
@@ -74,7 +74,7 @@ Pada modul ini, kita akan mencoba implementasi:
 2. Eksplorasi 5 jendela di atas, coba klik-klik dan pindahkan posisi tab dengan drag.
 3. Buat GameObject kosong lewat `GameObject > Create Empty`, ganti namanya, amati bagaimana Inspector berubah mengikuti objek yang dipilih.
 
-![Editor View](resources/1.png)
+> ![Editor View](resources/1.png)
 
 **✅ Cek:** Sudah bisa menunjukkan lokasi Hierarchy, Inspector, dan Project window.
 
@@ -92,10 +92,10 @@ Pada modul ini, kita akan mencoba implementasi:
      Prefabs/
      Scenes/
    ```
-   ![Project Folders](resources/2.png)
+   > ![Project Folders](resources/2.png)
 2. Import asset yang sudah diberikan (drag & drop sprite dan audio ke folder masing-masing).
 3. Cek **Sprite Import Settings**: klik sprite → di Inspector pastikan `Texture Type = Sprite (2D and UI)` → klik **Apply**.
-![Sprite Import](resources/3.png)
+> ![Sprite Import](resources/3.png)
 
 **✅ Cek:** Folder sudah rapi, sprite sudah ter-import dengan benar, dan Game view menampilkan area permainan dengan proporsi yang pas.
 
@@ -113,7 +113,7 @@ Pada modul ini, kita akan mencoba implementasi:
 1. Drag sprite pesawat ke Scene, posisikan di bagian bawah layar (misal Y = -4).
 2. Atur Scale hingga ukuran pesawat terlihat proporsional terhadap area permainan. Sebagai referensi, gunakan sekitar 3x jika menggunakan asset yang disediakan.
 3. Beri nama `Player`, set **Tag** = `Player` (buat tag baru lewat Inspector → Tag → Add Tag).
-![Player Setup](resources/5.png)
+> ![Player Setup](resources/5.png)
 4. `Add Component` → **Rigidbody2D** → set `Body Type = Kinematic`.
 5. Pada `RigidBody2D`, ubah `Interpolate` dari `None` menjadi `Interpolate` untuk mengurangi efek jitter saat bergerak.
 5. `Add Component` → **Box Collider 2D** (atau Circle Collider 2D) → centang **Is Trigger**.
@@ -167,7 +167,7 @@ Pada modul ini, kita akan mencoba implementasi:
     ```
 6. Drag script ke GameObject `Player`.
 7. Tekan **Play**, coba gerakkan dengan tombol A/D atau panah kiri/kanan. Pesawat harus berhenti di tepi layar (tidak keluar).
-![Player Physics](resources/35.png)
+> ![Player Physics](resources/35.png)
 
 **✅ Cek:** Pesawat bisa bergerak kiri-kanan dan tidak keluar dari batas layar saat Play.
 
@@ -179,7 +179,8 @@ Pada modul ini, kita akan mencoba implementasi:
 1. Drag sprite bintang ke Scene, beri nama `Star`.
 2. `Add Component` → **Circle Collider 2D**, centang **Is Trigger**.
 3. Ulangi langkah yang sama untuk sprite meteor, beri nama `Meteor`.
-![Circle Collider](resources/7.png)
+> ![Circle Collider](resources/7.png)
+
 **Script penanda jenis objek** `Scripts/FallingObject.cs`:
 
     ```csharp
@@ -239,7 +240,7 @@ Pada modul ini, kita akan mencoba implementasi:
 
 5. Attach script ke `Star` (set `type = Star`) dan ke `Meteor` (set `type = Meteor`).
 6. Drag kedua GameObject ke folder `Prefabs` untuk menjadikannya **Prefab**, lalu hapus instance-nya dari Scene.
-![Prefab](resources/8.png)
+> ![Prefab](resources/8.png)
 
 **Langkah membuat Spawner:**
 1. `GameObject > Create Empty`, beri nama `Spawner`, posisikan di atas layar (Y = 6).
@@ -278,11 +279,11 @@ Pada modul ini, kita akan mencoba implementasi:
     ```
 
 3. Drag script ke `Spawner`, isi field `Star Prefab` dan `Meteor Prefab` di Inspector dengan prefab dari folder `Prefabs`.
-![Spawner Setup](resources/9.png)
+> ![Spawner Setup](resources/9.png)
 
 **✅ Cek:** Saat Play, bintang dan meteor berjatuhan otomatis dari atas secara acak.
 
-![Falling Object Result](resources/10.png)
+> ![Falling Object Result](resources/10.png)
 ---
 
 ## Bagian 5: Memahami Collision & Trigger Detection 
@@ -311,8 +312,7 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 **Langkah:**
 1. Klik kanan di Hierarchy → `UI > Canvas` (ini otomatis membuat `EventSystem` juga).
 2. Pada Canvas, atur **Canvas Scaler** → `UI Scale Mode = Scale With Screen Size`, `Reference Resolution` sesuaikan dengan target platform (misal 1920x1080).
-
-    ![Canvas Setup](resources/11.png)
+> ![Canvas Setup](resources/11.png)
 3. Klik kanan pada Canvas → `UI > Text - TextMeshPro`, beri nama `ScoreText`, posisikan di pojok atas.
 4. Jika muncul prompt, import TMP Essentials: `Window > TextMeshPro > Import TMP Essential Resources`.
 5. Buat script `Scripts/ScoreManager.cs`:
@@ -357,7 +357,7 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
     ```
 
 6. Buat GameObject kosong `GameManagerObject`, attach script ini, drag `ScoreText` ke field `Score Text` di Inspector.
-![Score Manager](resources/12.png)   
+> ![Score Manager](resources/12.png)   
 7. Modifikasi kode berikut pada `FallingObject.cs` di bagian `OnTriggerEnter2D` untuk menambah skor saat bintang tertangkap (sudah ada di bagian sebelumnya).
     ```csharp
         void OnTriggerEnter2D(Collider2D other)
@@ -386,12 +386,10 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 - **AudioSource** adalah komponen yang "memutar" suara.
 - `PlayOneShot()` cocok untuk sound effect pendek yang bisa tumpang tindih (misal beberapa kali tangkap bintang secara cepat).
 
-
 **Langkah:**
 1. Buat GameObject kosong `AudioSourceObject`, tambahkan sebuah **AudioSource**:
    - `SFX Source` (untuk suara tangkap & ledakan)
-    ![Audio Source](resources/13.png)
-
+    > ![Audio Source](resources/13.png)
 2. Buat script `Scripts/AudioManager.cs`:
 
     ```csharp
@@ -417,8 +415,7 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
     ```
 
 3. Drag script `AudioManager` ke `GameManagerObject`, isi `Sfx Source` dengan AudioSource pada `AudioSourceObject`, isi `Catch Clip` dan `Explosion Clip` dengan file audio yang sudah ter-import.
-
-    ![Audio Manager](resources/28.png)
+> ![Audio Manager](resources/28.png)
 4. Modifikasi `FallingObject.cs` agar memanggil `AudioManager.Instance.PlaySFX()` saat bintang tertangkap atau meteor meledak (sudah ada di script sebelumnya).
     ```csharp
     void OnTriggerEnter2D(Collider2D other)
@@ -459,12 +456,12 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 1. Di Canvas, klik kanan → `UI > Panel`, beri nama `GameOverPanel`. Non-aktifkan (uncheck) GameObject ini di Inspector supaya tersembunyi di awal.
 2. Di dalam panel, tambahkan:
    - `TextMeshPro - Text` bertuliskan "Game Over", beri nama `GameOverText`. Atur posisinya di x = 0, y = 200, z = 0. Atur width menjadi 400, height 100, font size 72, alignment center.
-   ![Game Over Text](resources/15.png)
+   > ![Game Over Text](resources/15.png)
    - `TextMeshPro - Text` untuk skor akhir, beri nama `FinalScoreText`. Atur posisinya di x = 0, y = -100, z = 0. Atur width menjadi 400, height 100, font size 48, alignment center.
-
    - `Button - TextMeshPro` bertuliskan "Restart", beri nama `RestartButton`. Atur posisinya di x = 0, y = -300, z = 0. Atur width menjadi 200, height 60.
-   ![Hierarcy Game Over](resources/16.png)
-3. Buat script `Scripts/GameManager.cs`:
+   > ![Hierarcy Game Over](resources/16.png)
+  
+4. Buat script `Scripts/GameManager.cs`:
     ```csharp
     using UnityEngine;
     using UnityEngine.SceneManagement;
@@ -501,13 +498,16 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
     }
     ```
 
-4. Drag script ini ke `GameManagerObject`, isi field `Game Over Panel` dan `Final Score Text`.
-![Game Manager](resources/29.png)
-5. Pilih tombol `RestartButton` → di Inspector bagian `On Click ()` → klik `+` → drag `GameManagerObject` → pilih fungsi `GameManager > RestartGame()`.
-![Restart Button](resources/18.png)
-6. Pastikan Scene sudah tersimpan (`Ctrl+S`) dengan nama, misal `Gameplay`, lalu masuk ke `File > Build Profiles` pada tab `Scene List`, klik `Add Open Scenes` agar scene dikenali sistem.
-![Scene List](resources/19.png)
-7. Modifikasi `FallingObject.cs` agar memanggil `GameManager.Instance.GameOver()` saat meteor menyentuh player (sudah ada di script sebelumnya).
+5. Drag script ini ke `GameManagerObject`, isi field `Game Over Panel` dan `Final Score Text`.
+
+> ![Game Manager](resources/29.png)
+7. Pilih tombol `RestartButton` → di Inspector bagian `On Click ()` → klik `+` → drag `GameManagerObject` → pilih fungsi `GameManager > RestartGame()`.
+
+> ![Restart Button](resources/18.png)
+8. Pastikan Scene sudah tersimpan (`Ctrl+S`) dengan nama, misal `Gameplay`, lalu masuk ke `File > Build Profiles` pada tab `Scene List`, klik `Add Open Scenes` agar scene dikenali sistem.
+
+> ![Scene List](resources/19.png)
+9. Modifikasi `FallingObject.cs` agar memanggil `GameManager.Instance.GameOver()` saat meteor menyentuh player (sudah ada di script sebelumnya).
     ```csharp
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -544,7 +544,7 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 ### Bagian 8B: Main Menu (Bonus)
 
 1. Buat Scene baru: `File > New Scene`, simpan dengan nama `MainMenu`.
-![New Scene](resources/20.png)
+> ![New Scene](resources/20.png)
 2. Membuat UI Main Menu:
     - Di Hierarchy, klik kanan → `UI > Canvas`, rename menjadi `MainMenuCanvas`.
    - Pada Canvas, buka **Canvas Scaler** dan pilih `UI Scale Mode = Scale With Screen Size`.
@@ -596,13 +596,13 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
    - Drag GameObject `GameManager` dari Hierarchy ke slot object.
    - Klik dropdown fungsi → pilih `GameManager > GoToMainMenu()`.
    - Tekan Play, sengaja tangkap meteor, lalu saat Game Over klik **Main Menu**. Pastikan game kembali ke scene `MainMenu`.
-    ![Main Menu Button](resources/31.png)
+    > ![Main Menu Button](resources/31.png)
 7. Buka `File > Build Settings`, urutkan scene: **index 0 = MainMenu**, **index 1 = Gameplay** (drag untuk mengatur urutan).
-![Scene List Main Menu](resources/22.png)
+> ![Scene List Main Menu](resources/22.png)
 
 **✅ Cek (bonus):** Dari Main Menu bisa masuk ke Gameplay, dan dari Game Over bisa kembali ke Main Menu.
 
-![Main Menu Result](resources/30.png)
+> ![Main Menu Result](resources/30.png)
 ---
 
 ## Bagian 9: Testing Akhir & Recap 
@@ -618,9 +618,9 @@ Sengaja hapus centang `Is Trigger` di collider `Player`, lalu tekan Play dan ama
 4. Singleton Pattern + GameManager untuk mengatur alur game
 5. SceneManager.LoadScene untuk restart & navigasi menu
 
-![Main Menu](resources/32.png)
-![Gameplay](resources/34.png)
-![Game Over](resources/33.png)
+> ![Main Menu](resources/32.png)
+> ![Gameplay](resources/34.png)
+> ![Game Over](resources/33.png)
 
 ---
 
