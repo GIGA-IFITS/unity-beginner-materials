@@ -15,7 +15,6 @@ Pemain akan mengendalikan pesawat kecil yang bergerak kiri-kanan di bagian bawah
 - Tersentuh **meteor** → Game Over.
 - Ada tombol **Restart** (load ulang scene) dan **Main Menu**.
 
-
 > ![Sky Catcher Overview](resources/0.png)
 
 ---
@@ -36,7 +35,7 @@ Pada modul ini, kita akan mencoba implementasi:
 
 - Unity Hub sudah terinstall di laptop.
 - Unity Editor versi LTS sudah terpasang (modul ini dibuat dengan Unity 6000.3).
-- Sudah menerima folder asset (sprite pesawat, bintang, meteor, audio) yang dapat diakses pada.
+- Sudah menerima folder asset (sprite pesawat, bintang, meteor, audio) yang dapat diakses melalui [link ini (GDrive)](https://drive.google.com/drive/folders/1SvXGDwa8RhXS-n9Zrq-0_e3NrJ88xdIW?usp=drive_link) atau [link ini (GitHub)](https://github.com/GIGA-IFITS/unity-beginner-materials/blob/main/4.%20Hands%20On/Assets.zip).
 - Laptop dalam kondisi baterai penuh/tersambung charger.
 
 ---
@@ -93,7 +92,7 @@ Pada modul ini, kita akan mencoba implementasi:
      Scenes/
    ```
    > ![Project Folders](resources/2.png)
-2. Import asset yang sudah diberikan (drag & drop sprite dan audio ke folder masing-masing).
+2. Import asset yang sudah diberikan (drag & drop sprite dan audio ke folder masing-masing) melalui [link ini (GDrive)](https://drive.google.com/drive/folders/1SvXGDwa8RhXS-n9Zrq-0_e3NrJ88xdIW?usp=drive_link) atau [link ini (GitHub)](https://github.com/GIGA-IFITS/unity-beginner-materials/blob/main/4.%20Hands%20On/Assets.zip).
 3. Cek **Sprite Import Settings**: klik sprite → di Inspector pastikan `Texture Type = Sprite (2D and UI)` → klik **Apply**.
 > ![Sprite Import](resources/3.png)
 
