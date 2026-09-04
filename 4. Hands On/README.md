@@ -182,60 +182,60 @@ Pada modul ini, kita akan mencoba implementasi:
 
 **Script penanda jenis objek** `Scripts/FallingObject.cs`:
 
-    ```csharp
-    using UnityEngine;
+  ```csharp
+  using UnityEngine;
 
-    public class FallingObject : MonoBehaviour
-    {
-        public enum ObjectType { Star, Meteor }
-        public ObjectType type;
+  public class FallingObject : MonoBehaviour
+  {
+      public enum ObjectType { Star, Meteor }
+      public ObjectType type;
 
-        public int scoreValue = 10;
-        public float fallSpeed = 5f;
+      public int scoreValue = 10;
+      public float fallSpeed = 5f;
 
-        void Update()
-        {
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+      void Update()
+      {
+          transform.position += Vector3.down * fallSpeed * Time.deltaTime;
 
-            if (transform.position.y < -6f)
-            {
-                Destroy(gameObject);
-            }
-        }
+          if (transform.position.y < -6f)
+          {
+              Destroy(gameObject);
+          }
+      }
 
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.CompareTag("Player")) return;
+      void OnTriggerEnter2D(Collider2D other)
+      {
+          if (!other.CompareTag("Player")) return;
 
-            if (type == ObjectType.Star)
-            {
-                if (ScoreManager.Instance != null)
-                {
-                    ScoreManager.Instance.AddScore(scoreValue);
-                }
-                if (AudioManager.Instance != null)
-                {
-                    AudioManager.Instance.PlaySFX(AudioManager.Instance.catchClip);
-                }
-            }
-            else
-            {
-                if (AudioManager.Instance != null)
-                {
-                    AudioManager.Instance.PlaySFX(AudioManager.Instance.explosionClip);
-                }
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.GameOver();
-                }
-            }
-            
-            Destroy(gameObject);
-        }
-    }
-    ```
+          if (type == ObjectType.Star)
+          {
+              if (ScoreManager.Instance != null)
+              {
+                  ScoreManager.Instance.AddScore(scoreValue);
+              }
+              if (AudioManager.Instance != null)
+              {
+                  AudioManager.Instance.PlaySFX(AudioManager.Instance.catchClip);
+              }
+          }
+          else
+          {
+              if (AudioManager.Instance != null)
+              {
+                  AudioManager.Instance.PlaySFX(AudioManager.Instance.explosionClip);
+              }
+              if (GameManager.Instance != null)
+              {
+                  GameManager.Instance.GameOver();
+              }
+          }
+          
+          Destroy(gameObject);
+      }
+  }
+  ```
 
-    > ⚠️ **Wajar jika muncul error di Console** setelah menulis script ini. Script memanggil `ScoreManager`, `AudioManager`, `GameManager` yang **belum dibuat**. Error ini akan hilang otomatis setelah menyelesaikan Bagian 6-8. Ini bagian normal dari proses belajar membaca error message. Untuk sekarang, bisa dihapus atau dikomen baris 25-46 yang menyebabkan error tersebut, kita akan menambahkan kembali nanti setelah bagian terkait selesai.
+  > ⚠️ **Wajar jika muncul error di Console** setelah menulis script ini. Script memanggil `ScoreManager`, `AudioManager`, `GameManager` yang **belum dibuat**. Error ini akan hilang otomatis setelah menyelesaikan Bagian 6-8. Ini bagian normal dari proses belajar membaca error message. Untuk sekarang, bisa dihapus atau dikomen baris 25-46 yang menyebabkan error tersebut, kita akan menambahkan kembali nanti setelah bagian terkait selesai.
 
 5. Attach script ke `Star` (set `type = Star`) dan ke `Meteor` (set `type = Meteor`).
 6. Drag kedua GameObject ke folder `Prefabs` untuk menjadikannya **Prefab**, lalu hapus instance-nya dari Scene.
