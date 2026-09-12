@@ -4,7 +4,7 @@ Modul lanjutan dari [Hands-On](../4.%20Hands%20On/README.md). Kita akan membangu
 
 ## Persiapan
 
-1. Pastikan modul Hands-On sudah berfungsi: Play, bergerak, menangkap star, terkena meteor, Restart, dan Main Menu.
+1. Pastikan modul Hands-On sudah berfungsi: Play, bergerak, menangkap star, terkena meteor, Restart, dan Main Menu. [link modul Hands-On](https://github.com/devreonid/ProjectClubdev)
 2. Simpan scene dan buat checkpoint Git atau salinan project. Jangan menggunakan folder `Library` sebagai backup source.
 3. Buka `Assets/Scenes/Gameplay.unity`. Pastikan render pipeline memakai `Assets/Settings/UniversalRP.asset` dan Renderer 2D.
 4. Asset baseline: `Background.png`, `Star.png`, `Meteor.png`, `Ship.gif`, prefab `Star_0`, prefab `Meteor_0`, serta tujuh script gameplay.
